@@ -75,7 +75,7 @@ const MainFeed = () => {
 
   return (
     <div className="flex-grow overflow-y-scroll">
-      <div className="grid grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 gap-1image.png">
         {items.map((post) => (
           <PostCard {...post} />
         ))}
