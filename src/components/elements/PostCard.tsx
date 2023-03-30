@@ -1,4 +1,5 @@
 import React, { FC, ReactElement } from "react";
+import { formatDistance } from "date-fns";
 
 export type Post = {
   title: string;
@@ -8,11 +9,17 @@ export type Post = {
 };
 
 const PostCard: FC<Post> = ({ title, imageSrc, from, time }): ReactElement => {
+  const distance = formatDistance(time, new Date());
+
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden flex-grow">
-      <div className="p-0">
-        <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
-        <p className="mt-2 text-gray-600">{from}</p>
+      <div className="pt-1 pl-3">
+        <h2 className="text-xl font-black	m-0">{title}</h2>
+
+        <div className="flex flex-row mt-0.5">
+          <h4 className="font-semibold ">{from}</h4> &middot;
+          <p className="opacity-75">{distance}</p>
+        </div>
       </div>
       <div
         className="h-[414px] w-[414px] aspect-w-1 aspect-h-1 bg-cover bg-center"
