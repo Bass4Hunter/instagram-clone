@@ -9,18 +9,33 @@ import ProtectedRoute from "../elements/ProtectedRoute";
 import Login from "../views/Login";
 import useFindUser from "../../hooks/useFindUser";
 import { GlobalContext } from "../../hooks/GlobalContext";
+import Snackbar from "../elements/SnackBar";
+import { useState } from "react";
+import { Status } from "../../types/Status";
 
 export default function App() {
   const { user, setUser, isLoading } = useFindUser();
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<Status>("SUCCESS");
 
   return (
     <BrowserRouter>
-      <GlobalContext.Provider value={{ user, setUser, isLoading }}>
+      <GlobalContext.Provider
+        value={{
+          user,
+          setUser,
+          isLoading,
+          message,
+          status,
+          setStatus,
+          setMessage,
+        }}
+      >
         <div
           className="flex justify-center items-center min-h-screen max-h-screen bg-gray-200"
           style={{ fontFamily: "Noto Sans JP" }}
         >
-          <div className="w-[414px] flex flex-col min-h-screen max-h-screen bg-primary">
+          <div className="w-[435px] flex flex-col min-h-screen max-h-screen bg-primary">
             <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/login" element={<Login />} />
@@ -64,6 +79,7 @@ export default function App() {
                 }
               />
             </Routes>
+            <Snackbar />
           </div>
         </div>
       </GlobalContext.Provider>
