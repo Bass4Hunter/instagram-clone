@@ -1,4 +1,5 @@
 import React, { FC, ReactElement, useState } from "react";
+import { ImageChecker } from "../elements/ImageChecker";
 
 type Props = {};
 
@@ -44,12 +45,7 @@ const NewPost: FC<Props> = (): ReactElement => {
           />
         </div>
         <div className="mb-4 w-full">
-          <img
-            src={previewUrl}
-            alt="Preview"
-            id="image-preview"
-            className="w-full"
-          />
+          <ImageChecker imgSrc={previewUrl} />
         </div>
         <div className="mb-4 w-full">
           <label
