@@ -1,12 +1,6 @@
 import React, { FC, ReactElement } from "react";
 import { formatDistance } from "date-fns";
-
-export type Post = {
-  title: string;
-  imageSrc: string;
-  from: string;
-  time: Date;
-};
+import { Post } from "../../types/Post";
 
 const PostCard: FC<Post> = ({ title, imageSrc, from, time }): ReactElement => {
   const distance = formatDistance(time, new Date());

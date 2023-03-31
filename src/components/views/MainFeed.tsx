@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from "react";
-import PostCard, { Post } from "./../elements/PostCard";
+import PostCard from "./../elements/PostCard";
+import { Post } from "../../types/Post";
+import VirtualScroll from "../elements/VirtualScroll";
 
-type ResponsePost = {
-  title: string;
-  imageSrc: string;
-  from: string;
-  time: Date;
-};
-
-type ResponseGetHomeFeed = {
-  page: number;
-  homeFeed: ResponsePost[];
-};
-
-function generateMockupPosts(size: number) {
-  const posts: ResponsePost[] = [];
-  for (let idx = 0; idx < size; idx++) {
+function generateMockupPosts(offset: number, limit: number) {
+  const posts: Post[] = [];
+  for (let idx = offset; idx < offset + limit; idx++) {
     posts.push({
       title: `title_${idx}`,
       imageSrc: "https://images.wsj.net/im-491405?width=1280&size=1",
@@ -26,66 +16,65 @@ function generateMockupPosts(size: number) {
   return posts;
 }
 
-function generateResponse(page: number): ResponseGetHomeFeed {
-  return {
-    page,
-    homeFeed: generateMockupPosts(10),
-  };
-}
+const callApi = (offset: number, limit: number) => {
+  return new Promise<Post[]>((resolve) => {
+    const items = generateMockupPosts(offset, limit);
+    resolve(items);
+  });
+};
 
 const MainFeed = () => {
+  const limit = 2;
+  const buffer = limit * 3;
+  const cache = buffer - limit;
   const [items, setItems] = useState<Post[]>([]);
-  const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Load more items when user scrolls to bottom of the div
-  const handleScroll = () => {
-    const div = document.querySelector(".flex-grow");
-    if (!div) return;
-    if (div.scrollTop + div.clientHeight === div.scrollHeight) {
-      setPage((prevPage) => prevPage + 1);
-    }
-  };
-
   useEffect(() => {
-    // Set up event listener for scrolling
-    const div = document.querySelector(".flex-grow");
-    if (!div) return;
-    div.addEventListener("scroll", handleScroll);
-    return () => div.removeEventListener("scroll", handleScroll);
+    setIsLoading(true);
+    callApi(0, buffer).then((res: any) => {
+      setItems(res);
+      setIsLoading(false);
+    });
   }, []);
 
-  useEffect(() => {
-    // Load new items from API when page changes
-    const fetchData = async () => {
-      setIsLoading(true);
-      // request
-      // const response = await fetch(
-      //   `https://api.example.com/items?page=${page}`
-      // );
-      // const data = await response.json();
-      const response = generateResponse(page);
-      const data = response.homeFeed;
-      setItems((prevItems) => [...prevItems, ...data]);
-      setIsLoading(false);
-    };
-    fetchData();
-    console.log("SCROLL", page);
-  }, [page]);
+  const prevCallback = async (newOffset: number) => {
+    setIsLoading(true);
+
+    const res = await callApi(newOffset, limit);
+    const newItems = [...res, ...items.slice(0, cache)] as any;
+    setItems(newItems);
+    setIsLoading(false);
+    return true;
+  };
+
+  const nextCallback = async (newOffset: number) => {
+    setIsLoading(true);
+
+    const res = await callApi(newOffset, limit);
+    const newItems = [...items.slice(-cache), ...res] as any;
+    setItems(newItems);
+    setIsLoading(false);
+    return true;
+  };
 
   return (
-    <div className="flex-grow overflow-y-scroll">
-      <div className="grid grid-cols-1 gap-1 image.png">
-        {items.map((post) => (
-          <PostCard {...post} />
+    <VirtualScroll
+      buffer={buffer}
+      rowHeight={300}
+      style="flex-grow overflow-y-scroll"
+      limit={limit}
+      onPrevCallback={prevCallback}
+      onNextCallback={nextCallback}
+    >
+      <>
+        {items.map((item) => (
+          <div style={{ padding: "10px" }}>
+            {isLoading ? <>Loading...</> : <PostCard {...item} />}
+          </div>
         ))}
-      </div>
-      {isLoading && (
-        <div className="flex items-center justify-center mt-4">
-          <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-12 w-12"></div>
-        </div>
-      )}
-    </div>
+      </>
+    </VirtualScroll>
   );
 };
 
