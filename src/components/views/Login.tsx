@@ -1,6 +1,6 @@
 import React, { FC, ReactElement } from "react";
 import useAuth from "../../hooks/useAuth";
-import useForm from "../../hooks/useForm";
+import useForm, { LoginData } from "../../hooks/useForm";
 import Header from "../elements/Header";
 import Snackbar from "../elements/SnackBar";
 

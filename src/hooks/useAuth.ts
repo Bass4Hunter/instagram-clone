@@ -68,12 +68,17 @@ export default function useAuth() {
         if (!setUser) {
           throw Error("No context user");
         }
-        setUser({ username: decoded.name, token: data.token });
+        setUser({
+          username: decoded.name,
+          token: data.token,
+          userId: data.userId,
+        });
         if (!setMessage) return;
         if (!setStatus) return;
         setMessage("Logged");
         setStatus("SUCCESS");
         navigate("/main_feed");
+        console.log("TOKE", data.token);
       })
       .catch((error) => {
         if (!setMessage) return;
