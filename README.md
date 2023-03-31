@@ -1,3 +1,24 @@
+# Users
+
+## User 1
+
+username: Gabriel
+password: Gonza
+
+## User 2
+
+username: Brian
+password: Pinto
+
+## User 3
+
+username: Diego
+password: Portocarrero
+
+## Backend Repository
+
+This project backend, thanks to >>[Brian Pinto](https://github.com/Pimed23/instagram-clone-server)<<.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
