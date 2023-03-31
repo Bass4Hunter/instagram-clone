@@ -76,7 +76,7 @@ const Profile: FC<Props> = ({ user }): ReactElement => {
       onPrevCallback={prevCallback}
       onNextCallback={nextCallback}
       header={
-        <div className="flex items-center justify-center mt-4">
+        <div className="flex items-center justify-center m-4">
           <img
             src={
               "https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg"
@@ -86,27 +86,19 @@ const Profile: FC<Props> = ({ user }): ReactElement => {
           />
           <div className="ml-6">
             <div className="flex justify-between items-center">
-              <h1 className="font-bold text-2xl">{user.username}</h1>
+              <h1 className="font-bold text-2xl mr-10">{user.username}</h1>
               <button
                 onClick={logoutUser}
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                className="bg-secondary text-white hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
               >
                 <BiLogOut size={28} className="mr-2" />
-                <span className="text-base">Logout</span>
+                <span>Logout</span>
               </button>
             </div>
             <div className="flex mt-2">
               <div className="mr-6">
                 <p className="font-bold">{"10"}</p>
                 <p className="text-sm text-gray-500">Posts</p>
-              </div>
-              <div className="mr-6">
-                <p className="font-bold">{"10"}</p>
-                <p className="text-sm text-gray-500">Followers</p>
-              </div>
-              <div>
-                <p className="font-bold">{"10"}</p>
-                <p className="text-sm text-gray-500">Following</p>
               </div>
             </div>
           </div>

@@ -17,21 +17,21 @@ export default function App() {
     <BrowserRouter>
       <GlobalContext.Provider value={{ user, setUser, isLoading }}>
         <div
-          className="flex justify-center items-center min-h-screen max-h-screen bg-zinc-200"
+          className="flex justify-center items-center min-h-screen max-h-screen bg-gray-200"
           style={{ fontFamily: "Noto Sans JP" }}
         >
-          <div className="w-[414px] flex flex-col min-h-screen max-h-screen bg-amber-300">
-            <Header />
+          <div className="w-[414px] flex flex-col min-h-screen max-h-screen bg-primary">
             <Routes>
               <Route path="/" element={<Login />} />
+              <Route path="/login" element={<Login />} />
               <Route
-                index
                 path="/main_feed"
                 element={
                   <ProtectedRoute
                     isAuthenticated={!!user}
                     redirectTo={"/login"}
                   >
+                    <Header />
                     <MainFeed />
                     <Navigation />
                   </ProtectedRoute>
@@ -44,6 +44,7 @@ export default function App() {
                     isAuthenticated={!!user}
                     redirectTo={"/login"}
                   >
+                    <Header />
                     <NewPost />
                     <Navigation />
                   </ProtectedRoute>
@@ -56,6 +57,7 @@ export default function App() {
                     isAuthenticated={!!user}
                     redirectTo={"/login"}
                   >
+                    <Header />
                     <Profile user={user!} />
                     <Navigation />
                   </ProtectedRoute>

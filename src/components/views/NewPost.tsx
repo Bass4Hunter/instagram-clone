@@ -25,65 +25,63 @@ const NewPost: FC<Props> = (): ReactElement => {
   };
 
   return (
-    <div className="flex-grow ">
-      <div className="flex items-center justify-center mt-4">
-        <div className="max-w-md mx-auto">
-          <h1 className="text-3xl font-bold mb-4">Upload Image</h1>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 font-bold mb-2"
-              htmlFor="image-url"
-            >
-              Image URL
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="image-url"
-              type="text"
-              placeholder="https://example.com/image.jpg"
-              value={imageUrl}
-              onChange={handleUrlChange}
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 font-bold mb-2"
-              htmlFor="image-preview"
-            >
-              Preview
-            </label>
-            <img
-              src={previewUrl}
-              alt="Preview"
-              id="image-preview"
-              className="w-full"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 font-bold mb-2"
-              htmlFor="image-name"
-            >
-              Image Name
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="image-name"
-              type="text"
-              placeholder="Enter image name"
-              value={imageName}
-              onChange={handleNameChange}
-            />
-          </div>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            onClick={handleUpload}
+    <div className="flex-grow flex items-center justify-center">
+      <div className="w-full flex flex-col items-center h-full m-4">
+        <div className="mb-4 w-full">
+          <label
+            className="block text-gray-700 font-bold mb-2"
+            htmlFor="image-url"
           >
-            Upload
-          </button>
+            Enter an image URL
+          </label>
+          <input
+            className=" shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="image-url"
+            type="text"
+            placeholder="https://example.com/image.jpg"
+            value={imageUrl}
+            onChange={handleUrlChange}
+          />
         </div>
+        <div className="mb-4 w-full">
+          <img
+            src={previewUrl}
+            alt="Preview"
+            id="image-preview"
+            className="w-full"
+          />
+        </div>
+        <div className="mb-4 w-full">
+          <label
+            className="block text-gray-700 font-bold mb-2"
+            htmlFor="image-name"
+          >
+            Give it a name:
+          </label>
+          <input
+            className="w-full shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="image-name"
+            type="text"
+            placeholder="Enter image name"
+            value={imageName}
+            onChange={handleNameChange}
+          />
+        </div>
+        <button
+          className="w-full bg-secondary  hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          onClick={handleUpload}
+        >
+          Post now!
+        </button>
       </div>
     </div>
+    // <div className="flex-grow">
+    //   <div className="flex h-full items-center justify-center mt-4 items-center">
+    //     <div className="w-full mx-auto align-middle">
+
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 

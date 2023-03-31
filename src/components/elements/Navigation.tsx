@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 
 function Navigation() {
   return (
-    <footer className="bg-gray-900 text-white py-3">
-      <div className="max-w-200 mx-auto flex justify-around items-center px-4">
+    <footer className="p-2">
+      <div className="text-black max-w-200 mx-auto flex justify-around items-center px-4 border-t-2 pt-3">
         <Link to="/main_feed">
           <AiFillHome size={28} />
         </Link>

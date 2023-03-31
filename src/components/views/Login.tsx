@@ -2,6 +2,7 @@ import React, { FC, ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useForm from "../../hooks/useForm";
+import Header from "../elements/Header";
 
 type Props = {};
 
@@ -20,8 +21,9 @@ const Login: FC<Props> = (): ReactElement => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen">
       <div className="w-full max-w-md m-auto bg-white rounded-lg border border-gray-200 shadow p-5">
+        <Header />
         <h2 className="text-xl font-bold mb-5">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -56,19 +58,13 @@ const Login: FC<Props> = (): ReactElement => {
               placeholder="Password"
             />
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-center">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="w-full bg-secondary hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
               Sign In
             </button>
-            <a
-              className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-              href="#"
-            >
-              Forgot Password?
-            </a>
           </div>
         </form>
       </div>
