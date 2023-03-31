@@ -1,28 +1,42 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement, useContext, useState } from "react";
+import { GlobalContext } from "../../hooks/GlobalContext";
+import useForm from "../../hooks/useForm";
+import usePost from "../../hooks/usePost";
 import { ImageChecker } from "../elements/ImageChecker";
 
 type Props = {};
 
 const NewPost: FC<Props> = (): ReactElement => {
-  const [imageUrl, setImageUrl] = useState("");
-  const [imageName, setImageName] = useState("");
-  const [previewUrl, setPreviewUrl] = useState("");
+  const { values, handleChange } = useForm({
+    title: "",
+    imageSrc: "",
+  });
+  const { sendPost } = usePost();
+  const { user, setMessage, setStatus } = useContext(GlobalContext);
 
-  const handleUrlChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setImageUrl(e.target.value);
-    setPreviewUrl(e.target.value);
-  };
+  const handleUpload = async () => {
+    if (!values.title) {
+      if (!setMessage) return;
+      if (!setStatus) return;
+      setMessage("Title missing");
+      setStatus("ERROR");
+      return;
+    }
 
-  const handleNameChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setImageName(e.target.value);
-  };
+    if (!values.imageSrc) {
+      if (!setMessage) return;
+      if (!setStatus) return;
+      setMessage("Image url missing");
+      setStatus("ERROR");
+      return;
+    }
 
-  const handleUpload = () => {
-    // Handle upload logic here
+    await sendPost({
+      title: values.title,
+      imageSource: values.imageSrc,
+      from: user?.username ?? "",
+      time: new Date(),
+    });
   };
 
   return (
@@ -39,13 +53,14 @@ const NewPost: FC<Props> = (): ReactElement => {
             className=" shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="image-url"
             type="text"
+            name="imageSrc"
             placeholder="https://example.com/image.jpg"
-            value={imageUrl}
-            onChange={handleUrlChange}
+            value={values.imageSrc}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-4 w-full">
-          <ImageChecker imgSrc={previewUrl} />
+          <ImageChecker imgSrc={values.imageSrc} />
         </div>
         <div className="mb-4 w-full">
           <label
@@ -57,10 +72,11 @@ const NewPost: FC<Props> = (): ReactElement => {
           <input
             className="w-full shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="image-name"
+            name="title"
             type="text"
             placeholder="Enter image name"
-            value={imageName}
-            onChange={handleNameChange}
+            value={values.title}
+            onChange={handleChange}
           />
         </div>
         <button

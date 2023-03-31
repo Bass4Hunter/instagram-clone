@@ -6,26 +6,7 @@ import PostCard from "../elements/PostCard";
 import PostsGallery from "../elements/PostsGallery";
 import VirtualScroll from "../elements/VirtualScroll";
 import { BiLogOut } from "react-icons/bi";
-
-function generateMockupPosts(offset: number, limit: number) {
-  const posts: Post[] = [];
-  for (let idx = offset; idx < offset + limit; idx++) {
-    posts.push({
-      title: `title_${idx}`,
-      imageSrc: "https://images.wsj.net/im-491405?width=1280&size=1",
-      from: "mockup",
-      time: new Date(),
-    });
-  }
-  return posts;
-}
-
-const callApi = (offset: number, limit: number) => {
-  return new Promise<Post[]>((resolve) => {
-    const items = generateMockupPosts(offset, limit);
-    resolve(items);
-  });
-};
+import usePost from "../../hooks/usePost";
 
 type Props = {
   user: User;
@@ -38,6 +19,11 @@ const Profile: FC<Props> = ({ user }): ReactElement => {
   const [items, setItems] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { logoutUser } = useLogout();
+  const { getUserPosts } = usePost();
+
+  const callApi = (offset: number, limit: number) => {
+    return getUserPosts();
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -97,8 +83,8 @@ const Profile: FC<Props> = ({ user }): ReactElement => {
             </div>
             <div className="flex mt-2">
               <div className="mr-6">
-                <p className="font-bold">{"10"}</p>
-                <p className="text-sm text-gray-500">Posts</p>
+                {/* <p className="font-bold">{items.length}</p>
+                <p className="text-sm text-gray-500">Posts</p> */}
               </div>
             </div>
           </div>

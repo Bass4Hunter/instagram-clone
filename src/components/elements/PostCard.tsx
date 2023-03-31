@@ -2,8 +2,13 @@ import React, { FC, ReactElement } from "react";
 import { formatDistance } from "date-fns";
 import { Post } from "../../types/Post";
 
-const PostCard: FC<Post> = ({ title, imageSrc, from, time }): ReactElement => {
-  const distance = formatDistance(time, new Date());
+const PostCard: FC<Post> = ({
+  title,
+  imageSource,
+  from,
+  time,
+}): ReactElement => {
+  // const distance = formatDistance(time, new Date());
 
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden flex-grow">
@@ -12,12 +17,12 @@ const PostCard: FC<Post> = ({ title, imageSrc, from, time }): ReactElement => {
 
         <div className="flex flex-row mt-0.5">
           <h4 className="font-semibold ">{from}</h4> &middot;
-          <p className="opacity-75">{distance}</p>
+          <p className="opacity-75">{}</p>
         </div>
       </div>
       <div
         className="h-[414px] w-[414px] aspect-w-1 aspect-h-1 bg-cover bg-center"
-        style={{ backgroundImage: `url(${imageSrc})` }}
+        style={{ backgroundImage: `url(${imageSource})` }}
       ></div>
     </div>
   );

@@ -2,26 +2,7 @@ import React, { useState, useEffect } from "react";
 import PostCard from "./../elements/PostCard";
 import { Post } from "../../types/Post";
 import VirtualScroll from "../elements/VirtualScroll";
-
-function generateMockupPosts(offset: number, limit: number) {
-  const posts: Post[] = [];
-  for (let idx = offset; idx < offset + limit; idx++) {
-    posts.push({
-      title: `title_${idx}`,
-      imageSrc: "https://images.wsj.net/im-491405?width=1280&size=1",
-      from: "mockup",
-      time: new Date(),
-    });
-  }
-  return posts;
-}
-
-const callApi = (offset: number, limit: number) => {
-  return new Promise<Post[]>((resolve) => {
-    const items = generateMockupPosts(offset, limit);
-    resolve(items);
-  });
-};
+import usePost from "../../hooks/usePost";
 
 const MainFeed = () => {
   const limit = 2;
@@ -29,6 +10,11 @@ const MainFeed = () => {
   const cache = buffer - limit;
   const [items, setItems] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { getPosts } = usePost();
+
+  const callApi = (offset: number, limit: number) => {
+    return getPosts();
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -39,6 +25,9 @@ const MainFeed = () => {
   }, []);
 
   const prevCallback = async (newOffset: number) => {
+    if (newOffset < 0) {
+      return false;
+    }
     setIsLoading(true);
 
     const res = await callApi(newOffset, limit);
